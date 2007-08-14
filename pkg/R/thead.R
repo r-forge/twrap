@@ -5,11 +5,13 @@
 ### rowspan, and colspan of the headers
 
 thead <- function(formula) {
+  rhs <- as.character(formula)[2]
   tf <- terms(f, keep.order = TRUE)
 
   ## return unique headers
-  heads <- as.character(attr(tf, "variables"))[-1]
-  
+  uniqHeads <- as.character(attr(tf, "variables"))[-1]
+  Heads <- attr(tf, "term.labels")
+  Heads
   
 }
 
@@ -17,4 +19,14 @@ thead <- function(formula) {
 f <- ~ A + B:(C+D) + P
 f <- ~ A + B + P + C + D + P
 f <- ~ A:(B:(C+D) + E:(C+D)) + P
+f <- ~ B:(C+D) + E:(C+D) + P
+f <- ~ B:(C+D) + E:(C2+D2) + P
 f <- ~ `Big dog` + `Little cat`
+
+### In all cases variables within an interaction term in the
+### formula are re-ordered by the ordering of the
+### '"variables"' attribute, which is the order in which the
+### variables occur in the formula.
+
+### Can I identify the header hierachy? It would be
+### nice if the term.labels were not rearranged
