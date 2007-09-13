@@ -16,22 +16,36 @@ f <- ~ Characteristic + Control + Disease:(aMCI + AD) + P # works
 f <- ~ `Patient characteristic` + P
 
 ### Can I handle duplicates?
-f <- ~ A + C + D + `P` + E + F + `P`
+f <- ~ A + B + P + E + F + P
 
-fixdups <- function(formula) {
-  ## Assumes variables that are duplicated
-  ## are back-ticked
+fixdups <- function(f) {
+
   if(!is.formula(f))
     stop(sQuote("f"), " must be a formula")
-  f <- as.character(formula)[2]	
+
+  ft <- terms(f)
+  ftl <- attr(ft, "term.labels")
+  fchar <- as.character(f)[2]
+  ### pseudo:
+  for (i in 1:length(ftl))
+     find out how many times term i is in fchar
+     if more than one, then sub() that many times minus 1.
+     need to track what to peel off from each after making it
+     unique. That is, need to know how to revert.
   
+  fchar <- as.character(formula)[2]	
+  
+  ## split on non-word characters (\W) that may
+  ## be preceded or followed by whitespace
   f2 <- strsplit(f, "\\s*\\W\\s*", perl = TRUE)[[1]]
+  return(f2)
+
   f2. <- make.unique(f2)
   old <- f2[f2 != f2.]
   new <- f2.[f2 != f2.]
   for(i in 1:length(old))
      f <- sub(paste("", old[i], sep = "") 
-              paste(new[i], f)
+              paste(new[i], f))
           
 }
 fixdups(f)
