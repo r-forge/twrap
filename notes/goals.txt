@@ -1,0 +1,4 @@
+Goals
+=====
+The goal is to create a package that will allow the user
+to create a complex journal data table from within R.
