@@ -46,7 +46,13 @@ echo $contents; } ?>
 <h3>References</h3>
 <ul>
 <li><a href = "http://svnbook.red-bean.com/nightly/en/svn-book.html">Version Control with Subversion</a></li>
+<li>NCBI Journal Publishing Tag Set <a href = "http://dtd.nlm.nih.gov/publishing/">main page</a>. An interesting Google seach is to
+look for pages that link to this page.</li>
+<li>NCBI/NLM Journal Publishing Tag Set <a href = "http://dtd.nlm.nih.gov/publishing/tag-library/2.3/index.html">version 2.3 documentation</a></li>
+<li><a href = "http://dtd.nlm.nih.gov/publishing/coding/tables.html">NCBI XML Table Example</a></li>
+<li><a href = "http://www.pubmedcentral.nih.gov/pmcdoc/tagging-guidelines/article/style.html">PubMed Central XML tagging guidelines</a></li>
 </ul>
+
 <p> The <strong>project summary page</strong> you can find <a href="http://<?php echo $domain; ?>/projects/<?php echo $group_name; ?>/"><strong>here</strong></a>. </p>
 
 </body>
