@@ -17,21 +17,34 @@ f <- ~ `Patient characteristic` + P
 
 ### Can I handle duplicates?
 f <- ~ A + B + P + E + F + P
+f <- ~ `Pumpkin pie` + B + P + E + F + P
 
 fixdups <- function(f) {
 
   if(!is.formula(f))
     stop(sQuote("f"), " must be a formula")
 
-  ft <- terms(f)
+  ft <- terms(f, keep.order = TRUE, simplify = FALSE)
   ftl <- attr(ft, "term.labels")
   fchar <- as.character(f)[2]
-  ### pseudo:
+
+  ftl.count <- numeric(length(ftl))
+
+  ## ftl.count[1] <-
+
+    
+  fchar.split <- strsplit(fchar, 
+                          split = c(" *\\+ *"),
+                          perl = TRUE)
+
+  ## pseudo:   
   for (i in 1:length(ftl))
      find out how many times term i is in fchar
      if more than one, then sub() that many times minus 1.
      need to track what to peel off from each after making it
      unique. That is, need to know how to revert.
+
+
   
   fchar <- as.character(formula)[2]	
   
