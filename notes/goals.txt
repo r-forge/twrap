@@ -1,4 +1,26 @@
 Goals
 =====
 The goal is to create a package that will allow the user
-to create a complex journal data table from within R.
+to create a representation of a journal table object
+within R. The minimum requirements are
+
+1) To allow the user to specify the column headings
+   and in particular headings that span columns such
+   as in this example:
+
+   Table 1.
+   =======================================
+                          Treatment groups
+                          ----------------
+   Variable     Control    A            B
+   ---------------------------------------
+
+2) To allow the user to specify the horizontal rules
+   in the table
+
+3) To allow the user to footnote any table cell
+
+4) To allow the user full control over elements
+
+Ideally there will be print(), HTML(), and latex() 
+methods for the table object. 
