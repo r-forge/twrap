@@ -39,8 +39,11 @@ Next steps
    do decimal places rather than significant digits.
    
 3. Is there a nice algorithm for showing digits? Something like 
-   how many digits distingish the quartiles?
+   how many digits distingish the quartiles? Another approach
+   is to keep two digits in the residuals. 
 
+4. P-values are needed.   
+   
 The print/format methods could allow either of:
                    Group
      Statistic      Active       Control
@@ -216,7 +219,7 @@ medR.formula <- function(formula,
     stop(sQuote(overall.label), " is an existing level")
     s <- c(Overall = list(unlist(s)), s)
   }  
-  structure(sapply(s, FUN = meanSD, ...),
+  structure(sapply(s, FUN = medR, ...),
             class = "medR")
 }
 
@@ -249,10 +252,8 @@ tbl.formula <- function(formula,
   structure(lapply(s, FUN = tbl, ...),
             class = "tbl")
 }
-    
-
-	    
 @ 
+
 
 Now some tests.
 <<Rcode>>=
@@ -350,7 +351,7 @@ Some tests.
 <<Rcode>>=
 
 print(medIQR(y ~ g, data = d))
-print(medR(y ~ g, data = d))
+(medR(y ~ g, data = d))
 
 medIQR(y ~ g)["Median", ]
 medIQR(y ~ g)[,"a", drop = F]
