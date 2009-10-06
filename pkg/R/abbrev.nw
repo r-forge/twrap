@@ -89,9 +89,9 @@ to use `NextMethod` (so I don't).
 
 <<Rcode>>=
 medIQR <- function(x, ...) UseMethod("medIQR")
-medR <- function(x, ...) UseMethod("medR")
+medR <-   function(x, ...) UseMethod("medR")
 meanSD <- function(x, ...) UseMethod("meanSD")
-tbl <- function(x, ...) UseMethod("tbl")
+tbl <-    function(x, ...) UseMethod("tbl")
 @ 
 
 Default method
@@ -121,14 +121,14 @@ medR.default <- function(x, na.rm = TRUE) {
 meanSD.default <- function(x, na.rm = TRUE) {
     m <- mean(x, na.rm = na.rm)
     s <- sd(x, na.rm = na.rm)
-    structure(m,
+    structure(c(m, s),
               names = c("Mean", "SD"),
 	      class = "meanSD")
 }
 
 
 tbl.default <- function(rowvar, ...) {
-  counts <- table(rowvar)
+  counts <- base::table(rowvar, ...)
   percents <- prop.table(counts)
   m <- matrix(c(counts, percents), 
               byrow = FALSE, nrow = length(counts),
@@ -169,6 +169,8 @@ medIQR.formula <- function(formula,
   structure(sapply(s, FUN = medIQR, ...),
             class = "medIQR")
 }
+
+
 
 meanSD.formula <- function(formula,
                    data = NULL, ...,
@@ -356,7 +358,7 @@ print(medIQR(y ~ g, data = d))
 medIQR(y ~ g)["Median", ]
 medIQR(y ~ g)[,"a", drop = F]
 
-print(medIQR(y ~ g, data = d))["Median", "b"] + 3
+print(medIQR(y ~ g, data = d))["Median", "b"] + 3 # WTF?
 
 ## toLatex.numeric <- function(x, ...) {
 ##   z <- ifelse(x < 0, paste("$ -", format(abs(x), ...), " $", sep = ""),
@@ -375,6 +377,52 @@ print(medIQR(y ~ g, data = d))["Median", "b"] + 3
 ## toHTML.numeric(medIQR(rnorm(10)))
 
 @
+
+Here I try to write the formula interfaces to include results from
+hypothesis tests.
+
+<<Rcode>>=
+medIQR2.formula <- function(formula,
+                            data = NULL, ...,
+                            subset, na.action = NULL,
+                            test = TRUE,
+                            overall = FALSE,
+                            overall.label = "Overall") {
+  if (missing(formula) || (length(formula) != 3)) 
+    stop("'formula' missing or incorrect")
+  m <- match.call(expand.dots = FALSE)
+  if (is.matrix(eval(m$data, parent.frame()))) 
+    m$data <- as.data.frame(data)
+  m$... <- m$overall <- m$overall.label <- NULL
+  m$na.action <- na.action
+  require(stats, quietly = TRUE)
+  m[[1]] <- as.name("model.frame")
+  mf <- eval(m, parent.frame())
+  response <- attr(attr(mf, "terms"), "response")
+  s <- split(mf[[response]], mf[-response])
+  
+  if(test) {
+    DNAME <- paste(names(mf), collapse = " by ")
+    DATA <- split(mf[[response]], g)
+    names(DATA) <- c("x", "y")
+    h <- do.call("wilcox.test", c(DATA, list(...)))
+    h$data.name <- DNAME
+  }
+  
+  
+  if(overall) {
+    if(any(names(s) == overall.label))
+      stop(sQuote(overall.label), " is an existing level")
+    s <- c(Overall = list(unlist(s)), s)
+  }
+  
+  FIXME
+  structure(list("statistic" = sapply(s, FUN = medIQR, ...),
+                 "htest" = h),
+            class = "medIQR")
+}
+@
+
 
 Rounding
 --------
@@ -429,6 +477,9 @@ s <- function() {
   source(file.path(tempdir(), "noweb.R"), echo = TRUE)
 }
 @ 
+
+A better approach which escaped me until now is just to use
+`Stangle("abbrev.nw")`. 
 
 
 [1]: http://daringfireball.net/projects/markdown/
