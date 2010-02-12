@@ -226,7 +226,7 @@ medR.formula <- function(formula,
 }
 
 
-## This should handle the cases where 
+## This must be able to handle the cases where 
 ## the levels are not the same for each
 ## group
 tbl.formula <- function(formula,
@@ -245,7 +245,13 @@ tbl.formula <- function(formula,
   m[[1]] <- as.name("model.frame")
   mf <- eval(m, parent.frame())
   response <- attr(attr(mf, "terms"), "response")
-  s <- split(mf[[response]], mf[-response])
+  # assume groups are factors
+  # but make the response a factor
+  y <- mf[[response]]
+  if(!inherits(y, "factor"))
+    y <- factor(y)
+  
+  s <- split(y, mf[-response]) 
   if(overall) {
     if(any(names(s) == overall.label))
     stop(sQuote(overall.label), " is an existing level")
@@ -313,17 +319,19 @@ See `format.data.frame`.
 
 <<Rcode>>=
 
-format.tbl <- function(x, ...) {
+format.tbl <- function(x, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
 
-  f <- function(y, ...) {
+  f <- function(y, format = format, digits = digits, omit.zero.pct = TRUE, ...) {
      n <- y[, "Number"]
      p <- y[, "Percent"]
-     p <- ifelse(p == 0, "", 
-                 formatC(100 * p, ...))
+     p <- formatC(100 * p, format = format, digits = digits, ...)
      dn <- dimnames(y)
      m <- matrix(paste(n, " (", p, ")", sep = ""),
                  ncol = 1,
                  dimnames = list(Level = dn[[1]], "Number (%)"))
+     if(omit.zero.pct) {
+       m[n==0] <- "0"
+     }  
      m
   }
   
