@@ -317,11 +317,15 @@ print.medIQR <- function(x, quote = FALSE, ...){
 Must be able to handle vectors or matrices
 See `format.data.frame`.
 
+The `omit.zero.pct` argument handles whether or not one shows "0 (0)" or just "0".
+
+
+
 <<Rcode>>=
 
 format.tbl <- function(x, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
 
-  f <- function(y, format = format, digits = digits, omit.zero.pct = TRUE, ...) {
+  f <- function(y, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
      n <- y[, "Number"]
      p <- y[, "Percent"]
      p <- formatC(100 * p, format = format, digits = digits, ...)
@@ -352,8 +356,8 @@ print.tbl <- function(x, quote = FALSE, ...){
   print(format(x, ...), quote = quote)
   invisible(x)
 }
-print(tbl(sex))
-print(tbl(sex ~ dx + g, data = d, overall = TRUE))
+## print(tbl(sex))
+## print(tbl(sex ~ dx + g, data = d, overall = TRUE))
 @
 
 Some tests.
@@ -447,9 +451,30 @@ showing percentages to one decimal place, but maybe that's
 just me.
 
 
+Appendix A
+----------
 
-Appendix
---------
+Nicely format a P-value
+
+<<Rcode>>=
+formatP <- function(x, ...){
+  UseMethod("formatP")
+}
+
+formatP.default <- function(x, na.form = "NA") {
+  ifelse(x > 0.99, ">0.99",
+         ifelse(x >= 0.01, formatC(x, digits = 2, format = "f"),
+                ifelse(x < 0.001, "<0.001", formatC(x, digits = 3, format = "f"))))
+}
+formatP.htest <- function(x, ...){
+  formatP(x$p.value, ...)
+}
+
+@ 
+
+
+Appendix B
+----------
 
 To extract the R code chunks to form a complete 
 function, type this at the shell:
@@ -488,6 +513,11 @@ s <- function() {
 
 A better approach which escaped me until now is just to use
 `Stangle("abbrev.nw")`. 
+
+
+
+<<>>=
+@ 
 
 
 [1]: http://daringfireball.net/projects/markdown/
