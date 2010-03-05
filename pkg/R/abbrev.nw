@@ -7,20 +7,24 @@ Preface
 This is a `noweb` file that contains textual
 documentation, R code chunks, and the function
 documentation.  See the Appendix at bottom to
-learn how to process it. 
+learn how to process it. Or just run this:
+
+<<Rcode>>=
+Stangle("abbrev.nw"); source("abbrev.R")
+@ 
 
 Motivation
 ----------
 
-A lot of an analysts time is spent creating tables. Often the entries
+A lot of an analyst's time is spent creating tables. Often the entries
 in the table cells are simple numeric summaries such as mean (SD) or
 median (IQR). There are a number of functions here that calculate
 these numeric summaries and provide format methods to display the
 summaries in a concise or abbreviated way (e.g., as "mean (SD)" shown
 to two decimal places).
 
-Function list
--------------
+Functions 
+---------
 
 1. `medIQR` provides the median and interquartile range
 
@@ -30,21 +34,22 @@ Function list
 
 4. `tbl` provides counts and proportions
 
+It's worth pointing out that the `tbl` structure is a matrix if the
+desired table is one column or a list if the desired table is multiple 
+columns. For the one-column case, the `tbl` is a matrix whose first
+column is the counts/number and the second column is the percent.
+
+For the multi-column `tbl`, each column is an element of a list and
+each element is a matrix with two columns: counts/number and percent.
+
 Next steps
 ----------
 1. Make this program a little more literate with helpful 
    comments so I can remember what each piece does and how I do it
 
-2. Format needs to handle digits somehow. Keep it simple and 
-   do decimal places rather than significant digits.
+2. P-values are needed.   
    
-3. Is there a nice algorithm for showing digits? Something like 
-   how many digits distingish the quartiles? Another approach
-   is to keep two digits in the residuals. 
-
-4. P-values are needed.   
-   
-The print/format methods could allow either of:
+3. The print/format methods could allow either of:
                    Group
      Statistic      Active       Control
        Median (IQR) 3 (1 to 7)   5 (2 to 8)
@@ -224,7 +229,7 @@ medR.formula <- function(formula,
   structure(sapply(s, FUN = medR, ...),
             class = "medR")
 }
-
+@ 
 
 ## This must be able to handle the cases where 
 ## the levels are not the same for each
@@ -270,7 +275,7 @@ medIQR(rnorm(10))
 m <- medIQR(y ~ g, data = d)
 print(m)
 class(m)
-tbl(g ~ sex, data = d, overall = TRUE)
+format(tbl(g ~ sex, data = d, overall = TRUE), digits = 0)
 @ 
 
 These are attempts at print and format methods.
@@ -325,6 +330,7 @@ The `omit.zero.pct` argument handles whether or not one shows "0 (0)" or just "0
 
 format.tbl <- function(x, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
 
+  ## This is the workhorse to paste the percent after the number
   f <- function(y, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
      n <- y[, "Number"]
      p <- y[, "Percent"]
@@ -358,7 +364,77 @@ print.tbl <- function(x, quote = FALSE, ...){
 }
 ## print(tbl(sex))
 ## print(tbl(sex ~ dx + g, data = d, overall = TRUE))
+@ 
+
+Now I want to create an `as.table` method for a `tbl` because
+I need to extract out the counts.
+
+<<>>=
+as.table.tbl <- function(x, ...){
+  if(is.matrix(x)){
+    xx <- x[, "Number", drop = F]
+    dimnames(xx) <- list("Level" = row.names(x),
+                         "Number")
+  }
+  else {
+    nc <- length(x)
+    rval <- vector("list", nc)
+    ## for each column in the table, grab the numbers
+    for (i in 1:nc) rval[[i]] <- x[[i]][, "Number"]
+    xx <- do.call("cbind", rval)
+    dimnames(xx) <- list("Number in each level" = row.names(x[[1]]),
+                         "Group" = names(x))
+  }
+  xx
+}
+as.table(tbl(sex ~ dx, data = d))
+as.table(tbl(d$sex))
+@ 
+
+Now I want to create a summary method for the `tbl` object
+which will show a P-value.
+
+<<>>=
+summary.tbl <- function(object, test = c("Chisq", "Fisher", "trend"), 
+                        correct = FALSE, ...){
+  
+  test <- match.arg(test)
+  xx <- as.table(object)
+  
+  if(test == "Chisq"){
+    tt <- chisq.test(xx, correct = correct, ...)
+  }
+  else {
+    tt <- fisher.test(xx, ...)
+  }
+  
+  out <- list(table = object, htest = tt)
+  class(out) <- c("summary.tbl")
+  out
+}  
+  
+## This mixes format and print!!
+format.summary.tbl <- function(x, ...){
+  fx <- format(x$table, ...)
+  out <- cbind(fx, "P"= c(formatP(x$htest$p.value), rep("", nrow(fx) - 1)))
+  dimnames(out) <- list("No. (%) in each level" = row.names(fx),
+                        "Group" = c(dimnames(fx)[[2]], "P"))
+  print(out, quote = FALSE)
+  cat("\nNote: P-value based on", x$htest$method, "\n") 
+  invisible(out)
+}
+
+obj <- tbl(sex ~ dx, data = d)
+format(summary(obj, test = "Fisher"), digits = 0)
+format(summary(obj, test = "Chisq"), digits = 0)
+                          
+
+
+
+
 @
+
+
 
 Some tests.
 
@@ -489,34 +565,11 @@ To extract the Rd chunks do
 
 To read about Markdown syntax go [here][1].
 
-You can possibly convert this document
-to nicel formatted HTML with
-
-     perl ~weigand/local/Markdown_1.0.1/Markdown.pl \
-       --html4tags filename.nw > filename.html
-
-I say "possibly" because I find the Markdown program
-often chokes on what appears to be valid Markdown.
-Despite this, the Markdown syntax makes a file 
-very readable as is, so it's a nice way to
-structure the docment. 
-
-R code to extract the functions in this document is as follows.
-<<Rcode>>=
-s <- function() {
-  notangle("abbrev.nw", 
-           file.out = file.path(tempdir(), "noweb.R"),
-           name = "Rcode")
-  source(file.path(tempdir(), "noweb.R"), echo = TRUE)
-}
-@ 
-
 A better approach which escaped me until now is just to use
-`Stangle("abbrev.nw")`. 
-
-
 
 <<>>=
+Stangle("abbrev.nw", output = "abbrev.R")
+source("abbrev.R")
 @ 
 
 
