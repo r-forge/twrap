@@ -1,1 +1,1 @@
-%insert documentation here
+% Package documentation?
