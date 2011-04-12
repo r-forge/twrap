@@ -56,6 +56,14 @@
   }
 }
 
+\details{
+  For the formula method, multiple variables on the right hand side
+  of the formula are combined to form the unique levels by which
+  the numeric vector is summarized. The underlying code is borrowed
+  from \code{\link{boxplot}}. It may be wise to eventually include
+  intercept only models just for completeness.
+}
+
 \value{
   The default method returns a numeric vector of length 3 showing the
   median, Q1, and Q3.
@@ -67,12 +75,14 @@
   it will probably change to to class \code{"sumry"} or something
   similar so that functions like \code{\link{meanSD}} return
   an object of the same class.
-  }
+}
 
-\details{
-  For the formula method, multiple variables on the right hand side
-  of the formula are combined to form the unique levels by which
-  the numeric vector is summarized. The underlying code is borrowed
-  from \code{\link{boxplot}}. It may be wise to eventually include
-  intercept only models just for completeness.
-  }
+\author{
+  Stephen Weigand \email{Weigand.Stephen@mayo.edu}
+}
+
+\examples{
+data(barley)
+medIQR(barley$yield)
+medIQR(yield ~ year + site, data = barley)
+}
