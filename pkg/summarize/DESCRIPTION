@@ -1,0 +1,13 @@
+Package: summarize
+Version: 0.1
+Date: 2011-04-26
+Title: Summarize distributions in a concise way
+Author@R: person("Stephen", "Weigand", email = "Weigand.Stephen@mayo.edu")
+Author: Stephen Weigand <Weigand.Stephen@mayo.edu>
+Maintainer: Stephen Weigand <Weigand.Stephen@mayo.edu>
+Depends: R
+Description: Provide concise marginal or conditional numeric summaries
+ of distributions using a formula interface. 
+License: GPL (>= 2)
+URL: https://r-forge.r-project.org/projects/twrap/
+
