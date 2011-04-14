@@ -3,7 +3,7 @@
 \title{Calculate the median and interquartile range}
 
 \description{This function will calculate the median and interquartile
-  range of a distribution, possibly for each level of a factor.}
+  range of a distribution, possibly for each level of a grouping variable.}
 
 \usage{
 \method{default}{medIQR}(x, na.rm = TRUE, \dots)
@@ -75,6 +75,11 @@
   it will probably change to to class \code{"sumry"} or something
   similar so that functions like \code{\link{meanSD}} return
   an object of the same class.
+}
+
+\note{
+  We use the term \dQuote{interquartile range} to be the lower and upper
+  quartile rather than their difference as is returned by \code{\link{IQR}}.
 }
 
 \author{
