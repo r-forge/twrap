@@ -20,7 +20,7 @@
   
   \item{formula}{
     A formula with the numeric vector on the left hand side and
-    one or more factors on the right hand side.
+    one or more grouping variables/factors on the right hand side.
   }
   
   \item{data}{
@@ -43,7 +43,7 @@
     for the overall summary. The default is \code{"Overall"} but
     in the unlikely event that \code{"Overall"} is already a level in the
     data set then \code{overall.label} can be changed to something
-    else.
+    like \code[
   }  
   
   \item{na.rm}{
@@ -60,8 +60,8 @@
   For the formula method, multiple variables on the right hand side
   of the formula are combined to form the unique levels by which
   the numeric vector is summarized. The underlying code is borrowed
-  from \code{\link{boxplot}}. It may be wise to eventually include
-  intercept only models just for completeness.
+  from \code{\link{boxplot}}. It may be possible to eventually include
+  intercept-only models just for completeness.
 }
 
 \value{
