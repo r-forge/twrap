@@ -3,7 +3,7 @@
 \title{Calculate the mean and standard deviation}
 
 \description{This function will calculate the mean and standard
-  deviation of a distribution, possibly for each level of a factor.}
+  deviation of a distribution, possibly for each level of a grouping variable.}
 
 \usage{
 \method{default}{meanSD}(x, na.rm = TRUE, \dots)
@@ -82,7 +82,7 @@
 }
 
 \seealso{
-  \code{\link{medIQR}}
+  \code{\link{medIQR}}, \code{\link{medR}}, \code{\link{summary}}, \code{\link{mean}}
 }
 
 \examples{
