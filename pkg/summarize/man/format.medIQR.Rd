@@ -10,8 +10,8 @@
   \dQuote{median (Q1 to Q3)} or \dQuote{median (Q1, Q3)}.
 }
 \usage{
-format.medIQR(x, digits = 2, format = "f", isep = "to", ...)
-print.medIQR(x, quote = FALSE, ...)
+\method{format}{medIQR}(x, digits = 2, format = "f", isep = " to ", ...)
+\method{print}{medIQR}(x, quote = FALSE, ...)
 }
 
 \arguments{
@@ -44,7 +44,10 @@ print.medIQR(x, quote = FALSE, ...)
     separating the quartiles with a dash which is easily confused
     with a negative sign.
   }
-  
+  \item{quote}{
+    Logical, indicating whether or not strings should be printed
+    with surrounding quotes.
+  }
   \item{\dots}{
     Other arguments passed to \code{\link{formatC}}.
 }
