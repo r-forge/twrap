@@ -1,0 +1,8 @@
+1. In twrap/pkg/ do 'R CMD build summary' in order to create
+   the gzipped file
+
+2. Move that somewhere like '~/tmp'
+
+3. Do R CMD check on the gzipped file from the new location
+
+4. Look at the log
