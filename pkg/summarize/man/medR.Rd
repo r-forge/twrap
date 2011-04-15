@@ -67,15 +67,18 @@
 
 \details{
   With small sample sizes, some analysts find that the interquartile
-  range is not meaningful and prefer to report the median and the range.
+  range is not very helpful and prefer to report the median and the range.
     
-  For the formula method, multiple variables on the right hand side
-  of the formula are combined to form the unique levels by which
-  the numeric vector is summarized. The underlying code is borrowed
-  from \code{\link{boxplot}}. It may be possible to eventually include
-  intercept-only models just for completeness.
+  For the formula method, multiple variables on the right hand side of
+  the formula are combined to form the unique levels by which the
+  numeric vector is summarized. The underlying code is borrowed from
+  \code{\link{boxplot}} so whatever works there will work here.
 
-  The \dots argument can 
+  An intercept-only model does not work currently but that would be
+  useful.
+
+  The \dots argument can be used to specify which of nine
+  quantile algorithms is used.
 }
 
 \value{

@@ -46,7 +46,7 @@
     for the overall summary. The default is \code{"Overall"} but
     in the unlikely event that \code{"Overall"} is already a level in the
     data set then \code{overall.label} can be changed to something
-    like \code{"Overall"}.
+    like \code{"All"}.
   }  
   
   \item{na.rm}{
@@ -69,8 +69,10 @@
   For the formula method, multiple variables on the right hand side
   of the formula are combined to form the unique levels by which
   the numeric vector is summarized. The underlying code is borrowed
-  from \code{\link{boxplot}}. It may be possible to eventually include
-  intercept-only models just for completeness.
+  from \code{\link{boxplot}} so whatever works there will work here.
+
+  An intercept-only model does not work currently but that would be
+  useful.
 }
 
 \value{
