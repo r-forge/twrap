@@ -1,6 +1,6 @@
 medR <-   function(x, ...) UseMethod("medR")
 
-medR.default <- function(x, na.rm = TRUE) {
+medR.default <- function(x, na.rm = TRUE, ...) {
     m <- mean(x, na.rm = na.rm)
     r <- range(x, na.rm = na.rm)
     structure(c(m, r),
@@ -22,7 +22,7 @@ medR.formula <- function(formula,
   m$... <- m$overall <- m$overall.label <- NULL
   m$na.action <- na.action
   require(stats, quietly = TRUE)
-  m[[1]] <- as.name("model.frame")
+  m[[1L]] <- as.name("model.frame")
   mf <- eval(m, parent.frame())
   response <- attr(attr(mf, "terms"), "response")
   s <- split(mf[[response]], mf[-response])
