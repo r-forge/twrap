@@ -90,7 +90,7 @@
 \keyword{ misc }
 
 \examples{
-data(barley)
-medIQR(barley$yield)
-medIQR(yield ~ year + site, data = barley)
+data(sleep)
+medIQR(sleep$extra)
+medIQR(extra ~ group, data = sleep)
 }

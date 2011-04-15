@@ -87,7 +87,7 @@
 \keyword{ univar }
 \keyword{ misc }
 \examples{
-data(barley)
-meanSD(barley$yield)
-meanSD(yield ~ year + site, data = barley)
+data(sleep)
+meanSD(sleep$extra)
+meanSD(extra ~ group, data = sleep)
 }

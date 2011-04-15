@@ -19,8 +19,6 @@ License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
 
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
 }
 \author{
 Stephen Weigand \email{Weigand.Stephen@mayo.edu}
@@ -30,8 +28,8 @@ Stephen Weigand \email{Weigand.Stephen@mayo.edu}
 \keyword{ univar }
 \keyword{ misc }
 \examples{
-data(barley)
-meanSD(barley$yield)
-meanSD(yield ~ year + site, data = barley)
-medIQR(yield ~ year + site, data = barley)
+data(sleep)
+meanSD(sleep$extra)
+meanSD(extra ~ group, data = sleep)
+medIQR(extra ~ group, data = sleep)
 }

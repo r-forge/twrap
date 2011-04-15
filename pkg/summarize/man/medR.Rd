@@ -97,7 +97,7 @@
 \keyword{ misc }
 
 \examples{
-data(barley)
-medR(barley$yield)
-medR(yield ~ year + site, data = barley)
+data(sleep)
+medR(sleep$extra)
+medR(extra ~ group, data = sleep)
 }
