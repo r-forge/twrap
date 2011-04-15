@@ -1,4 +1,7 @@
 \name{medIQR}
+\alias{medIQR}
+\alias{medIQR.default}
+\alias{medIQR.formula}
 
 \title{Calculate the median and interquartile range}
 
@@ -6,8 +9,8 @@
   range of a distribution, possibly for each level of a grouping variable.}
 
 \usage{
-\method{default}{medIQR}(x, na.rm = TRUE, \dots)
-\method{formula}{medIQR}(formula, data = NULL, \dots, subset,
+\method{medIQR}{default}(x, na.rm = TRUE, \dots)
+\method{medIQR}{formula}(formula, data = NULL, \dots, subset,
    na.action = NULL,
    overall = FALSE,
    overall.label = "Overall")
@@ -51,8 +54,14 @@
     be stripped before the computation proceeds.
   }
   
+  \item{na.action}{
+    A function which indicates what should happen when the data contain
+    \code{NA}s. The default is to ignore missing values in either the
+    response or the grouping variable(s).
+  }
+  
   \item{\dots}{
-    Further arguments passed to or from other methods.
+    Arguments passed to \code{\link{quantile}}.
   }
 }
 

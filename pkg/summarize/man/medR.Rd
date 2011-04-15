@@ -1,5 +1,7 @@
-
 \name{medR}
+\alias{medR}
+\alias{medR.default}
+\alias{medR.formula}
 
 \title{Calculate the median and range}
 
@@ -7,8 +9,8 @@
   range of a distribution, possibly for each level of a grouping variable.}
 
 \usage{
-\method{default}{medIQR}(x, na.rm = TRUE, \dots)
-\method{formula}{medIQR}(formula, data = NULL, \dots, subset,
+\method{medR}{default}(x, na.rm = TRUE, \dots)
+\method{medR}{formula}(formula, data = NULL, \dots, subset,
    na.action = NULL,
    overall = FALSE,
    overall.label = "Overall")
@@ -51,9 +53,15 @@
     A logical value indicating whether \code{NA} values should
     be stripped before the computation proceeds.
   }
+
+  \item{na.action}{
+    A function which indicates what should happen when the data contain
+    \code{NA}s. The default is to ignore missing values in either the
+    response or the grouping variable(s).
+  }
   
   \item{\dots}{
-    Further arguments passed to or from other methods.
+    Arguments passed to \code{\link{quantile}}.
   }
 }
 
