@@ -43,7 +43,7 @@
     for the overall summary. The default is \code{"Overall"} but
     in the unlikely event that \code{"Overall"} is already a level in the
     data set then \code{overall.label} can be changed to something
-    like \code[
+    like \code{"All"}.
   }  
   
   \item{na.rm}{
@@ -85,6 +85,9 @@
 \author{
   Stephen Weigand \email{Weigand.Stephen@mayo.edu}
 }
+
+\keyword{ univar }
+\keyword{ misc }
 
 \examples{
 data(barley)
