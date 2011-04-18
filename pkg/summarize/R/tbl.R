@@ -7,8 +7,8 @@ d <- data.frame(y = y, g = g, sex = sex, dx = dx)
 
 tbl <-    function(x, ...) UseMethod("tbl")
 
-tbl.default <- function(rowvar, ...) {
-  counts <- base::table(rowvar, ...)
+tbl.default <- function(x, ...) {
+  counts <- base::table(x, ...)
   percents <- prop.table(counts)
   m <- matrix(c(counts, percents), 
               byrow = FALSE, nrow = length(counts),
