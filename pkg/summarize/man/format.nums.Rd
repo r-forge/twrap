@@ -1,22 +1,33 @@
 \name{format.medIQR}
 \alias{format.medIQR}
 \alias{print.medIQR}
+\alias{format.medR}
+\alias{print.medR}
+\alias{format.meanSD}
+\alias{print.meanSD}
 
 \title{
-  Format the median and interquartile range
+  Format or print nice summaries of the median and IQR,
+  the median and range, or the mean and SD.
 }
 \description{
   Format the median and interquartile range as either
-  \dQuote{median (Q1 to Q3)} or \dQuote{median (Q1, Q3)}.
+  \dQuote{median (Q1 to Q3)} or \dQuote{median (Q1, Q3)};
+  format the median and range similarly; format the
+  mean and SD as \dQuote{mean (SD)}.
 }
 \usage{
 \method{format}{medIQR}(x, digits = 2, format = "f", isep = " to ", ...)
 \method{print}{medIQR}(x, quote = FALSE, ...)
+\method{format}{medR}(x, digits = 2, format = "f", isep = " to ", ...)
+\method{print}{medR}(x, quote = FALSE, ...)
+\method{format}{meanSD}(x, digits = 2, format = "f", isep = " to ", ...)
+\method{print}{meanSD}(x, quote = FALSE, ...)
 }
 
 \arguments{
   \item{x}{
-    The \code{medIQR} object to format or print.
+    The object to format or print.
   }
   
   \item{digits}{
@@ -31,7 +42,7 @@
   \item{format}{
     The style of formatting. This is passed to
     \code{\link{formatC}} so details are to be found there.
-    When \code{format = "f"}, this the \code{digits} argument
+    When \code{format = "f"}, the \code{digits} argument
     is interpreted as the number of digits after the decimal place.
     When \code{format = "g"} it is the number of significant digits.
   }
@@ -71,8 +82,8 @@
 \note{
   Formatting and rounding floating point numbers is complicated. Important ideas are the
   number of significant digits versus number of decimal places to display, the
-  round-to-even rule, and the fact that some numbers (even simple ones like
-  like \code{0.15} cannot be represented exactly and thus may not be rounded or
+  round-to-even rule, and the fact that some numbers (even ``simple'' ones like
+  like \code{0.15}) cannot be represented exactly and thus may not be rounded or
   formatted as some users expect.
 }
   
@@ -80,7 +91,8 @@
   Stephen Weigand \email{Weigand.Stephen@mayo.edu}
 }
 \seealso{
-  \code{\link{medIQR}}, \code{\link{formatC}}, \code{\link{format}}. 
+  \code{\link{medIQR}}, \link{medR},
+  \link{meanSD}; \code{\link{formatC}}, \code{\link{format}}. 
 }
 \examples{
 data(sleep)
