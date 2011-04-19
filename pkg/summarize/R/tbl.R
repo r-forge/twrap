@@ -1,10 +1,3 @@
-set.seed(944)
-y <- rnorm(100)
-g <- sample(letters[1:3], size = 100, replace = TRUE)
-sex <- sample(c("M", "F"), size = 100, replace = TRUE)
-dx <- sample(c("Active", "Control"), size = 100, replace = TRUE)
-d <- data.frame(y = y, g = g, sex = sex, dx = dx)
-
 tbl <-    function(x, ...) UseMethod("tbl")
 
 tbl.default <- function(x, ...) {
