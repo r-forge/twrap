@@ -61,44 +61,48 @@
   }
   \item{\dots}{
     Other arguments passed to \code{\link{formatC}}.
+  }
 }
-}
-\details{
+\details{  
   The convention of many biomedical journals is to summarize a
-  distribution
-  using a shorthand notation of the form \dQuote{median (IQR)} or \dQuote{mean (SD)}.
-  For example, some journal text might read \dQuote{\ldots the median (IQR) age of the treated group was
-    55 (32 to 81)} while a table stub might read \dQuote{Age, median
-    (IQR), years}.
-   This function facilitates this shorthand.
-}
+  distribution using a shorthand notation of the form \dQuote{median
+  (IQR)} or \dQuote{mean (SD)}.  For example, some journal text might
+  read \dQuote{\ldots the median (IQR) age of the treated group was 55
+  (32 to 81) \ldots} while a table stub might read \dQuote{Age, median (IQR),
+  years}.  This function facilitates this shorthand.
+ }
+
 \value{
-  For univariate summaries, the formatted result is a character vector of length one.
-  For conditional summaries as given by the formula method, the
-  formatted result
-  is a one-row matrix with informative \code{\link{dimnames}}. The print
-  method returns \code{x} invisibly.
+  For univariate summaries, the formatted result is a character vector
+  of length one.  For conditional summaries as given by the formula
+  method, the formatted result is a one-row matrix with informative
+  \code{\link{dimnames}}. The print method returns \code{x} invisibly.
 }
-\note{
-  Formatting and rounding floating point numbers is complicated. Important ideas are the
-  number of significant digits versus number of decimal places to display, the
-  round-to-even rule, and the fact that some numbers (even ``simple'' ones like
-  like \code{0.15}) cannot be represented exactly and thus may not be rounded or
-  formatted as some users expect.
+
+\note{ Formatting and rounding floating point numbers is
+  complicated. Important ideas are the number of significant digits
+  versus number of decimal places to display, the round-to-even rule,
+  and the fact that some numbers (even ``simple'' ones like like
+  \code{0.15}) cannot be represented exactly and thus may not be rounded
+  or formatted as some users expect.
 }
   
 \author{
   Stephen Weigand \email{Weigand.Stephen@mayo.edu}
 }
 \seealso{
-  \code{\link{medIQR}}, \link{medR},
+  \code{\link{medIQR}}, \link{medR}, and
   \link{meanSD}; \code{\link{formatC}}, \code{\link{format}}. 
 }
 \examples{
+
 data(sleep)
+meanSD(sleep$extra)
 result <- medIQR(extra ~ group, data = sleep)
 result # to print
 format(result)
+
 }
+
 \keyword{print}
 
