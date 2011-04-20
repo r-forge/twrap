@@ -15,10 +15,10 @@ tbl.default <- function(x, ...) {
 ## the levels are not the same for each
 ## group
 tbl.formula <- function(formula,
-                 data = NULL, ...,
-                 subset, na.action = NULL,
-		 overall = FALSE,
-                 overall.label = "Overall") {
+                        data = NULL, ...,
+                        subset, na.action = NULL,
+                        overall = FALSE,
+                        overall.label = "Overall") {
   if (missing(formula) || (length(formula) != 3)) 
     stop("'formula' missing or incorrect")
   m <- match.call(expand.dots = FALSE)
@@ -39,7 +39,7 @@ tbl.formula <- function(formula,
   s <- split(y, mf[-response]) 
   if(overall) {
     if(any(names(s) == overall.label))
-    stop(sQuote(overall.label), " is an existing level")
+      stop(sQuote(overall.label), " is an existing level")
     s <- c(Overall = list(unlist(s)), s)
   }  
   structure(lapply(s, FUN = tbl, ...),
@@ -47,20 +47,20 @@ tbl.formula <- function(formula,
 }
 
 format.tbl <- function(x, format = "f", digits = 0, omit.zero.pct = TRUE, ...) {
-
+  
   ## This is the workhorse to paste the percent after the number
   f <- function(y, format = "f", digits = 1, omit.zero.pct = TRUE, ...) {
-     n <- y[, "Number"]
-     p <- y[, "Percent"]
-     p <- formatC(100 * p, format = format, digits = digits, ...)
-     dn <- dimnames(y)
-     m <- matrix(paste(n, " (", p, ")", sep = ""),
-                 ncol = 1,
-                 dimnames = list(Level = dn[[1]], "Number (%)"))
-     if(omit.zero.pct) {
-       m[n==0] <- "0"
-     }  
-     m
+    n <- y[, "Number"]
+    p <- y[, "Percent"]
+    p <- formatC(100 * p, format = format, digits = digits, ...)
+    dn <- dimnames(y)
+    m <- matrix(paste(n, " (", p, ")", sep = ""),
+                ncol = 1,
+                dimnames = list(Level = dn[[1]], "Number (%)"))
+    if(omit.zero.pct) {
+      m[n==0] <- "0"
+    }  
+    m
   }
   
   if(!is.list(x)) 
@@ -102,19 +102,23 @@ as.table.tbl <- function(x, ...){
   xx
 }
 
-summary.tbl <- function(object, test = c("none", "chisq", "fisher", "prop.trend"), 
-                        correct = FALSE, 
-                        n.minus.1 = TRUE,
-                        dim.events = 2, # columns are events/non-events
-                        ...){
-  
-  test <- match.arg(test)
-  xx <- as.table(object)
-  tt <- switch(test,
-               "none" = NULL,
-               "chisq" = {
-                 if(!correct && n.minus.1)
-                   warning("Continuity correction overrides 'N-1' method in chi-squared test")
+summary.tbl <-
+  function(object, test = c("none", "chisq", "fisher", "prop.trend"), 
+           correct = FALSE, 
+           n.minus.1 = TRUE,
+           dim.events = 2, # columns are events/non-events
+           ...){
+    
+    test <- match.arg(test)
+    xx <- as.table(object)
+    tt <- switch(test,
+                 "none" = NULL,
+                 "chisq" = {
+                 if (condition) {
+                   
+                 } 
+                 (!correct && n.minus.1)
+                 warning("Continuity correction overrides 'N-1' method in chi-squared test")
                  tmp <- chisq.test(xx, correct = correct, ...)
                  if(n.minus.1 && min(tmp$expected) < 1)
                    warning("'N-1' method not recommended when expected counts are below 1")
@@ -125,26 +129,26 @@ summary.tbl <- function(object, test = c("none", "chisq", "fisher", "prop.trend"
                  }
                  tmp
                },
-               
-               "fisher" = fisher.test(xx, ...),
-               "prop.trend" = {
-                 if(dim(xx)[dim.events] != 2)
-                   stop("Test for trend requires a table with either two columns or two rows")
-                 if(dim.events == 2) {
-                   events <- xx[,1]
-                   trials <- apply(xx, 1, sum)
-                 }
-                 else {
-                   events <- xx[1, ]
-                   trials <- apply(xx, 2, sum)
-                 }
-                 tt <- prop.trend.test(events, trials, ...)
+                 
+                 "fisher" = fisher.test(xx, ...),
+                 "prop.trend" = {
+                   if(dim(xx)[dim.events] != 2)
+                     stop("Test for trend requires a table with either two columns or two rows")
+                   if(dim.events == 2) {
+                     events <- xx[,1]
+                     trials <- apply(xx, 1, sum)
+                   }
+                   else {
+                     events <- xx[1, ]
+                     trials <- apply(xx, 2, sum)
+                   }
+                   tt <- prop.trend.test(events, trials, ...)
                  })
-                   
-  out <- list(table = object, htest = tt)
-  class(out) <- c("summary.tbl")
-  out
-}  
+    
+    out <- list(table = object, htest = tt)
+    class(out) <- c("summary.tbl")
+    out
+  }  
 
 format.summary.tbl <- function(x, ...){
   fx <- format(x$table, ...)
