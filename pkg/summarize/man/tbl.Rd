@@ -55,11 +55,13 @@
 }
 
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+  For single-variable, or univariate, tables, the result is
+  a numeric matrix with rows representing the levels of the variable and
+  two columns.  The first column contains the number and the
+  second column contains the percentage.
+
+  For two-variable tables, the result is a list with each element being
+  a matrix having column 1 be the counts and column 2 be the percentages.
 }
 
 \author{Stephen Weigand \email{Weigand.Stephen@mayo.edu}}
