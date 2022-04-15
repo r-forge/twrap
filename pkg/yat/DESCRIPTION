@@ -1,0 +1,17 @@
+Package: yat
+Type: Package
+Title: Yet Another Way To Create A Summary Table
+Version: 0.0.1
+Date: 2022-04-11
+Authors@R: person(given = "Stephen", family = "Weigand", role = c("aut", "cre"),
+                  email = "Weigand.Stephen@mayo.edu")
+Maintainer: Stephen Weigand <Weigand.Stephen@mayo.edu>
+Description:  Create a table of summary statistics using a formula interface.
+  The left-hand-side of the formula corresponds to groups to create
+  summaries by and the right hand side consists of functions of
+  variables to summarize.
+License: GPL (>= 2)
+Imports:
+Suggests:
+BuildVignettes: no
+NeedsCompilation: no
