@@ -1,0 +1,10 @@
+2022-04-16    Stephen Weigand <Weigand.Stephen@mayo.edu>
+	* Version 0.0.2 adds the ability to have more than one variable on
+	the left hand side including `1` which means do any right hand
+	side summaries for the whole data set (i.e., "Total"). This can be
+	called with `1 + group` or `group + 1` depending on whether the
+	total should come before the groups or after.
+
+2022-04-15    Stephen Weigand <Weigand.Stephen@mayo.edu>
+
+	* Minimally functional version 0.0.1.

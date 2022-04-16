@@ -1,8 +1,8 @@
 Package: yat
 Type: Package
 Title: Yet Another Way To Create A Summary Table
-Version: 0.0.1
-Date: 2022-04-11
+Version: 0.0.2
+Date: 2022-04-16
 Authors@R: person(given = "Stephen", family = "Weigand", role = c("aut", "cre"),
                   email = "Weigand.Stephen@mayo.edu")
 Maintainer: Stephen Weigand <Weigand.Stephen@mayo.edu>

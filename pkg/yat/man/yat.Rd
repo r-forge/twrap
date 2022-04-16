@@ -17,13 +17,16 @@ yat(formula, data)
 }
 
 \arguments{
-  \item{formula}{a formula of the form \code{y ~ f(x1) + g(x2)} where
-    the variable on the left hand side is the grouping variable and
-    the terms on the right hand side are functions of
-    variables. For example, to summarize the \code{\link{iris}}
-    data set one might use \code{Species ~ mean(Sepal.Length) +
-      mean(Sepal.Width)}}
 
+  \item{formula}{a \code{\link{formula}} with one or more grouping variables on the
+    left hand side and \emph{functions} of one or more variables on the right
+    hand side. The left hand side of the formula can include \code{1}
+    which is treated like a \dQuote{total} variable for the data set.
+    
+    For example, to summarize sepal length and sepal width overall and
+    by species in the \code{\link{iris}} data set, one might use
+    \code{1 + Species ~ mean(Sepal.Length) + mean(Sepal.Width)}.
+  }
   \item{data}{a \code{\link{data.frame}} to summarize}
 }
 
@@ -40,7 +43,7 @@ yat(formula, data)
 
 ## Using base functions on the right hand side
 data(iris)
-yat(Species ~
+yat(Species + 1 ~ # left hand side means by Species and overall
       median(Sepal.Length) +
       median(Sepal.Width) +
       median(Petal.Length) +
@@ -48,7 +51,7 @@ yat(Species ~
     iris)
 
 
-## Two different summaries of 'Sepal.Length'
+## Two different summaries of 'Sepal.Length' by species
 yat(Species ~ mean(Sepal.Length) + sd(Sepal.Length), iris)
 
 ## Using the 'mediqr' function in yat which provides formatted output
@@ -67,14 +70,14 @@ yat(am ~ npct(cyl, "Cylinders, n (\%)") +
          meansd(hp, "Mean horsepower (SD)"),
     mtcars)
 
-## Writing a new simple summary function to use on the right hand side
+## Writing a simple custom summary to use on the right hand side
 minmax <- function(x, dig = 0) {
     paste(formatC(range(x, na.rm = TRUE),
                   format = "f",
                   digits = dig),
           collapse = " to ")
 }
-yat(am ~ minmax(hp), mtcars)
+yat(1 + am ~ minmax(hp), mtcars)
 
 }
 
