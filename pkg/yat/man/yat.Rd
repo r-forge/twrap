@@ -31,9 +31,15 @@ yat(formula, data)
 }
 
 \value{
-  A \code{\link{data.frame}} with columns corresponding to the
-  left hand side (grouping) variable.
+  A \code{\link{data.frame}} with a first column named \code{variable},
+  a second column named \code{categories} and subsequent columns
+  corresponding to the left hand side (grouping) variable(s).
+} 
+
+\note{
+  This package is brand new and should be considered very preliminary.
 }
+
 
 \author{
   Stephen Weigand <weigand.stephen@mayo.edu>

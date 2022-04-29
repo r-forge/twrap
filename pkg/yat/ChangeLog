@@ -1,3 +1,19 @@
+2022-04-16    <WEIGAND@R5185414>
+
+	* tests/yat-tests.R: Added this file.
+
+	* R/yat.R (rhs.by.lhs): When calling `as.data.frame` now
+	explicitly set `stringsAsFactors = FALSE`.
+
+	* man/yat.Rd: Specify that the return data frame column 1 named
+	`variable` and column 2 named `categories`. And that the package
+	is very preliminary.
+
+2022-04-16    Stephen Weigand <Weigand.Stephen@mayo.edu>
+
+	* DESCRIPTION (Description): Made a little clearer in terms of
+	what goes on the right hand side of the formula.
+
 2022-04-16    Stephen Weigand <Weigand.Stephen@mayo.edu>
 	* Version 0.0.2 adds the ability to have more than one variable on
 	the left hand side including `1` which means do any right hand

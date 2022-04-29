@@ -1,5 +1,6 @@
 export(yat,
+       nequals,
+       npct,
        mediqr,
-       meansd,
-       npct)
+       meansd)
 import(stats)
